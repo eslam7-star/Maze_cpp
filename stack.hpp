@@ -8,14 +8,12 @@
 using namespace std;
 
 typedef cell StackElement;
-const int DEFAULT_CAPACITY = 128;
 
 class Stack {
 
 public:
-    Stack(int numElements = DEFAULT_CAPACITY);
+    Stack();
     ~Stack();
-    const Stack& operator= (const Stack& rhs);
     bool empty() const;
     void push(const StackElement& value);
     void display(ostream& out) const;
@@ -33,7 +31,6 @@ private:
     };
     typedef Node* NodePointer;
     NodePointer myTop; 
-    
 };
 
 
