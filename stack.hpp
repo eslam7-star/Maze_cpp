@@ -7,7 +7,7 @@
 
 using namespace std;
 
-typedef cell StackElement;
+typedef char StackElement;
 
 class Stack {
 
