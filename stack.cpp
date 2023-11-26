@@ -14,7 +14,27 @@ StackElement Stack::top() const{
         return;
     }
 }
+Stack::~Stack() {
+    Stack::NodePointer currPtr = myTop, nextPtr = NULL;
+    while (currPtr != NULL) {
+        nextPtr = currPtr->next;
+        delete currPtr;
+        currPtr = nextPtr;
+    }
 
+}
+void Stack::display (ostream& out) const {
+    if (empty()) {
+        cerr << "Stack-empty!" << endl;
+        return;
+    }
+    Stack::NodePointer myPtr = myTop;
+    while (myPtr != NULL) {
+        out << myPtr-> direction  << ' ';
+        myPtr = myPtr->next;
+    }
+    out << endl;
+}
 void Stack::pop(){
      if (!empty()) {
         Stack::NodePointer ptr = myTop;
