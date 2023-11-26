@@ -3,12 +3,15 @@
 Hash_map::Hash_map(int n)
 :size(n) 
 {
+    if(n<0){
+        cerr<<"***Error! Negative Size***";
+        exit(1);
+    }
     hash_array_ptr = new (nothrow) cell[n];
     if(hash_array_ptr==0){
         cerr<<"***Error! Inadequate memory to allocate hash***";
         exit(1);
     } 
-
 }
 
 int Hash_map::hash_function( cell& c ){
