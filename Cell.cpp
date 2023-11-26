@@ -26,7 +26,7 @@ class cell{
     bool issolid(){
         return iswall;
     }
-     bool operator == (cell c){
+     bool operator == (cell& c){
         if(x==c.get_x()&&y==c.get_Y()&&iswall==c.issolid()) {
           return true;
         }
