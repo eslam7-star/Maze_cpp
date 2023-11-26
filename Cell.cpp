@@ -2,8 +2,6 @@ class cell{
     int x,y;
     bool iswall = 0;    
     
-    cell possible_moves[4];     
-
     public:
     cell() x(0) , y(0) { };
     cell(int x,int y,bool b=0): x(x) , y(y) , iswall(b){};
