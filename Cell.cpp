@@ -3,7 +3,7 @@ class cell{
     bool iswall = 0;    
     
     public:
-    cell() x(0) , y(0) { };
+    cell() :x(0) , y(0) { };
     cell(int x,int y,bool b=0): x(x) , y(y) , iswall(b){};
 
     int get_x(){
