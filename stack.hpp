@@ -24,7 +24,7 @@ private:
 
     class Node {
     public:
-        cell direction;
+        StackElement direction;
         Node* next;
         Node(){};
         Node(Node* link = 0) : next(link) {};

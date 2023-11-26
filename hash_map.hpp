@@ -11,13 +11,14 @@ using namespace std;
 class Hash_map{
 
 cell* hash_array_ptr;
+int size;
 
 public:
 
 Hash_map(int size);
-int hash_function(const cell& c);
-void insert(const cell& c , int index); 
-bool isfound(const cell& c);
+int hash_function( cell& c );
+void insert( cell& c ); 
+bool isfound( cell& c);
 ~Hash_map();
 
 };
