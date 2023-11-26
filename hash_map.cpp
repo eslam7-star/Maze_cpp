@@ -13,7 +13,12 @@ Hash_map::Hash_map(int n)
         exit(1);
     } 
 }
-
+Hash_map::~Hash_map(){
+    for (int i=0;i<size,i++){
+        delete hash_array_ptr[i];
+    }
+    delete[] hash_array_ptr;
+}
 int Hash_map::hash_function( cell& c ){
     int index = (10*(c.get_Y()) + c.get_x());
     if ( index < 0 || index > size){
