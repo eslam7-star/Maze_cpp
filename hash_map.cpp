@@ -1,5 +1,16 @@
 #include "hash_map.hpp"
 
+Hash_map::Hash_map(int n)
+:size(n) 
+{
+    hash_array_ptr = new (nothrow) cell[n];
+    if(hash_array_ptr==0){
+        cerr<<"***Error! Inadequate memory to allocate hash***";
+        exit(1);
+    } 
+
+}
+
 int Hash_map::hash_function( cell& c ){
     int index = (10*(c.get_Y()) + c.get_x());
     if ( index < 0 || index > size){
