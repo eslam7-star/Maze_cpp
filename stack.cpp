@@ -10,7 +10,18 @@ StackElement Stack::top() const{
         return myTop->direction;
     
     else{
-        cerr<<"***Error! Stack is empty***";
+        cerr<<"***Error! Stack is empty***"<< endl;
         return;
+    }
+}
+
+void Stack::pop(){
+     if (!empty()) {
+        Stack::NodePointer ptr = myTop;
+        myTop = myTop->next;
+        delete ptr;
+    } 
+    else {
+        cerr << "***Error!Stack is Empty***" << endl;
     }
 }
