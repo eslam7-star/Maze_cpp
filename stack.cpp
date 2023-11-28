@@ -1,4 +1,4 @@
-#include"stack.hpp"
+#include "stack.hpp"
 
 
 Stack::Stack(){
@@ -14,6 +14,7 @@ StackElement Stack::top() const{
         exit(1);
     }
 }
+
 Stack::~Stack() {
     Stack::NodePointer currPtr = myTop, nextPtr = NULL;
     while (currPtr != NULL) {
@@ -53,15 +54,14 @@ bool Stack::empty() const{
 }
 
 void Stack::push(const StackElement& value){
+    Stack::NodePointer ptr = new Stack::Node(NULL);
+    ptr->direction = value;
     if (empty())
     { 
-       myTop = new Stack::Node(NULL);
-       myTop->direction=value;
+       myTop = ptr;
     }
     else{ 
-        myTop->next= new Stack::Node(NULL);
-        myTop = myTop->next;
-        myTop->direction = value;
-        
+        ptr->next = myTop;
+        myTop = ptr;
     }
 }

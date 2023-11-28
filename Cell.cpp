@@ -1,4 +1,5 @@
 #pragma once
+
 class cell{
     int x,y;
     bool iswall = 0;    

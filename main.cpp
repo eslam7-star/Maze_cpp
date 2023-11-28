@@ -11,10 +11,12 @@
 // }
 
 
-
 int main(int argc, char const *argv[])
 {
-    
+    Hash_map h(20);
+    h.insert(&n);
+    h.insert(&r);
+    h.display();
     Stack s;
     s.push('r');
     s.push('l');

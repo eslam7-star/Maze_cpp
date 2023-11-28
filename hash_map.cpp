@@ -26,6 +26,10 @@ Hash_map::~Hash_map(){
 }
 
 int Hash_map::hash_function( cell* c ){
+    if ( c == 0 ){
+        cerr<<"null cell pointer "<<endl;
+        exit(1);
+    }
     int index = (10*(c->get_Y()) + c->get_x()) % size;
     if ( index < 0 || index > size){
         cerr<<"index not valid"<<endl;
@@ -57,7 +61,8 @@ void Hash_map::display(){
     if( hash_array_ptr == 0  ) return;
     for (size_t i = 0; i < size; i++)
     {
-        cout<<hash_array_ptr[i]->get_x()<<"           "<<hash_array_ptr[i]->get_Y()<<hash_array_ptr[i]->issolid()<<endl;
+        if ( hash_array_ptr[i] != 0 )
+            cout<<"cell X : "<<hash_array_ptr[i]->get_x()<<", cell Y : "<<hash_array_ptr[i]->get_Y()<<", issolid : "<<hash_array_ptr[i]->issolid()<<endl;
     }
 }
 
