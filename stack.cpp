@@ -46,7 +46,9 @@ void Stack::pop(){
     }
 }
 
-
+bool Stack::empty() const{
+    return myTop==NULL;
+}
 
 void Stack::push(const StackElement& value){
     if (empty())
