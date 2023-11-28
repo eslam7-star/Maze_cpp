@@ -16,9 +16,9 @@ int size;
 public:
 
 Hash_map(int n);
-int hash_function( cell& c );
-void insert( cell& c ); 
-bool isfound( cell& c);
+int hash_function( cell* c );
+bool insert( cell* c ); 
+bool isfound( cell* c);
 ~Hash_map();
 
 };

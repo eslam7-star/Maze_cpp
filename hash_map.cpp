@@ -25,19 +25,29 @@ Hash_map::~Hash_map(){
     delete[] hash_array_ptr;
 }
 
-int Hash_map::hash_function( cell& c ){
-    int index = (10*(c.get_Y()) + c.get_x()) % size;
+int Hash_map::hash_function( cell* c ){
+    int index = (10*(c->get_Y()) + c->get_x()) % size;
     if ( index < 0 || index > size){
         exit(-1);
     }
 }
 
-void Hash_map::insert( cell& c ){
+bool Hash_map::insert( cell* c ){
     if( !isfound(c) ){
         hash_array_ptr[ hash_function(c) ] = c;
     }else{
         cerr<<"a collision detected"<<endl;   // to avoid add the same cell twice
+        return 0;
     }
+    return 1;
+}
+
+bool Hash_map::isfound(cell* c){
+    if ( c != 0 && hash_array_ptr[hash_function(c)] == c )
+    {
+        return 1;
+    }
+    return 0;
 }
 
 
