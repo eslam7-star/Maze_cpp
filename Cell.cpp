@@ -40,6 +40,3 @@ class cell{
 
 
 
-bool issolid(cell& c){
-    return c.iswall();
-}
