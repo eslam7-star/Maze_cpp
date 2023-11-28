@@ -11,7 +11,7 @@ StackElement Stack::top() const{
     
     else{
         cerr<<"***Error! Stack is empty***"<< endl;
-        return;
+        exit(1);
     }
 }
 Stack::~Stack() {

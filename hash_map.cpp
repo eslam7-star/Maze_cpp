@@ -28,7 +28,7 @@ Hash_map::~Hash_map(){
 int Hash_map::hash_function( cell* c ){
     int index = (10*(c->get_Y()) + c->get_x()) % size;
     if ( index < 0 || index > size){
-        exit(-1);
+        exit(1);
     }
     return index;
 }
@@ -51,5 +51,13 @@ bool Hash_map::isfound(cell* c){
     return 0;
 }
 
+
+void Hash_map::display(){
+    if( hash_array_ptr == 0  ) return;
+    for (size_t i = 0; i < size; i++)
+    {
+        cout<<hash_array_ptr[i]->get_x()<<"           "<<hash_array_ptr[i]->get_Y()<<hash_array_ptr[i]->issolid()<<endl;
+    }
+}
 
 
