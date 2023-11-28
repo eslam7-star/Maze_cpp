@@ -10,7 +10,7 @@ using namespace std;
 
 class Hash_map{
 
-cell* hash_array_ptr;
+cell** hash_array_ptr;
 int size;
 
 public:
