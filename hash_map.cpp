@@ -19,7 +19,7 @@ Hash_map::Hash_map(int n)
 }
 
 Hash_map::~Hash_map(){
-    for (int i=0;i<size,i++){
+    for (int i=0;i<size;i++){
         delete hash_array_ptr[i];
     }
     delete[] hash_array_ptr;
@@ -30,6 +30,7 @@ int Hash_map::hash_function( cell* c ){
     if ( index < 0 || index > size){
         exit(-1);
     }
+    return index;
 }
 
 bool Hash_map::insert( cell* c ){

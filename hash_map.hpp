@@ -20,6 +20,7 @@ int hash_function( cell* c );
 bool insert( cell* c ); 
 bool isfound( cell* c);
 ~Hash_map();
+void display();
 
 };
 
