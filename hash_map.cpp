@@ -38,9 +38,9 @@ bool Hash_map::isfound( cell& c) {
     if(hash_array_ptr[ hash_function(c) ]==c){
         return true;
     } 
-    else{
+    
     return false;
-    }
+    
 }
 
 
