@@ -11,12 +11,17 @@
 // }
 
 
+
 int main(int argc, char const *argv[])
 {
-    Hash_map h1(10);
-    cout<<h1.insert(&n)<<endl;
-    cout<<h1.insert(&r)<<endl;
-    h1.display();
+    
+    Stack s;
+    s.push('r');
+    s.push('l');
+    s.push('r');
+    s.push('n');
+    s.push('s');
+    s.display(cout);
     
 
     return 0;

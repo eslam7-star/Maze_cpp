@@ -28,6 +28,7 @@ Hash_map::~Hash_map(){
 int Hash_map::hash_function( cell* c ){
     int index = (10*(c->get_Y()) + c->get_x()) % size;
     if ( index < 0 || index > size){
+        cerr<<"index not valid"<<endl;
         exit(1);
     }
     return index;

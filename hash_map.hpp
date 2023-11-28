@@ -22,6 +22,7 @@ bool isfound( cell* c);
 ~Hash_map();
 void display();
 
+
 };
 
 #endif

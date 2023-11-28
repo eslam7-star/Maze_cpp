@@ -23,6 +23,7 @@ Stack::~Stack() {
     }
 
 }
+
 void Stack::display (ostream& out) const {
     if (empty()) {
         cerr << "Stack-empty!" << endl;
@@ -35,6 +36,7 @@ void Stack::display (ostream& out) const {
     }
     out << endl;
 }
+
 void Stack::pop(){
      if (!empty()) {
         Stack::NodePointer ptr = myTop;
@@ -52,13 +54,14 @@ bool Stack::empty() const{
 
 void Stack::push(const StackElement& value){
     if (empty())
-    {
-      myTop =new Stack::Node(NULL); 
-      myTop->direction=value;
+    { 
+       myTop = new Stack::Node(NULL);
+       myTop->direction=value;
     }
     else{ 
-        myTop->next=new Stack::Node(NULL);
+        myTop->next= new Stack::Node(NULL);
         myTop = myTop->next;
-        myTop->direction=value;
+        myTop->direction = value;
+        
     }
 }
