@@ -16,18 +16,14 @@ int main(int argc, char const *argv[])
     Hash_map h(20);
     h.insert(&n);
     h.insert(&r);
-    h.display();
+    cout<<h;
     Stack s;
     s.push('r');
     s.push('l');
     s.push('r');
     s.push('n');
     s.push('s');
-    s.display(cout);
-<<<<<<< HEAD
     cout<<s;
-=======
->>>>>>> upstream/main
     
 
     return 0;

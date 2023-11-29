@@ -57,22 +57,21 @@ bool Hash_map::isfound(cell* c){
 }
 
 
-<<<<<<< HEAD
-void Hash_map::display() {
-=======
-void Hash_map::display(){
->>>>>>> upstream/main
+
+
+void Hash_map::display(ostream& out)const{
+
     if( hash_array_ptr == 0  ) return;
     for (size_t i = 0; i < size; i++)
     {
         if ( hash_array_ptr[i] != 0 )
-            cout<<"cell X : "<<hash_array_ptr[i]->get_x()<<", cell Y : "<<hash_array_ptr[i]->get_Y()<<", issolid : "<<hash_array_ptr[i]->issolid()<<endl;
+            out<<"cell X : "<<hash_array_ptr[i]->get_x()<<", cell Y : "<<hash_array_ptr[i]->get_Y()<<", issolid : "<<hash_array_ptr[i]->issolid()<<endl;
     }
 }
 
+ostream& operator<< (ostream& out, const Hash_map& a) {
+    a.display(out);
+    return out;
+}
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> upstream/main
