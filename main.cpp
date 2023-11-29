@@ -24,7 +24,10 @@ int main(int argc, char const *argv[])
     s.push('n');
     s.push('s');
     s.display(cout);
+<<<<<<< HEAD
     cout<<s;
+=======
+>>>>>>> upstream/main
     
 
     return 0;

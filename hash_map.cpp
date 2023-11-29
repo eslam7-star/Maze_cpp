@@ -57,7 +57,11 @@ bool Hash_map::isfound(cell* c){
 }
 
 
+<<<<<<< HEAD
 void Hash_map::display() {
+=======
+void Hash_map::display(){
+>>>>>>> upstream/main
     if( hash_array_ptr == 0  ) return;
     for (size_t i = 0; i < size; i++)
     {
@@ -67,5 +71,8 @@ void Hash_map::display() {
 }
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> upstream/main
