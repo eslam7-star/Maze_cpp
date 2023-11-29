@@ -36,8 +36,11 @@ int main(int argc, char const *argv[])
     //h.insert(&c2);
     h.insert(&c);
     cout<<h.isfound(&c)<<"   "<<h.isfound(&c2)<<endl;
-    
-
+    s.pop();
+    s.pop();
+    s.pop();
+    s.pop();
+    s.pop();
 
     return 0;
 }
