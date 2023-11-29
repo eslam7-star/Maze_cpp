@@ -27,7 +27,7 @@ void set_possible_ways(){
 }
 
 bool manyways(){
-
+    
 }
 
 

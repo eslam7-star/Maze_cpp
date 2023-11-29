@@ -11,9 +11,13 @@
 // }
 
 
+
+
 int main(int argc, char const *argv[])
 {
-    Hash_map h(20);
+    int x;
+    cin>>x;
+    Hash_map h(x);
     h.insert(&n);
     h.insert(&r);
     h.display();
@@ -24,7 +28,14 @@ int main(int argc, char const *argv[])
     s.push('n');
     s.push('s');
     s.display(cout);
-    
+    s.pop();
+    s.display(cout);
+    cout<<h.isfound(&n)<<endl;
+    cell c(3,4,1);
+    h.insert(&c);
+    cout<<h.isfound(&c)<<endl;
+        
+
 
     return 0;
 }
