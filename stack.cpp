@@ -65,3 +65,7 @@ void Stack::push(const StackElement& value){
         myTop = ptr;
     }
 }
+ostream& operator<< (ostream& out, const Stack& aStack) {
+    aStack.display(out);
+    return out;
+}

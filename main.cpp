@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     Hash_map h(x);
     h.insert(&n);
     h.insert(&r);
-    h.display();
+    cout<<h;
     Stack s;
     s.push('r');
     s.push('l');
