@@ -1,3 +1,5 @@
+#pragma once
+
 class cell{
     int x,y;
     bool iswall = 0;    
@@ -40,3 +42,6 @@ class cell{
 
 
 
+bool issolid(cell& c){
+    return c.issolid();
+}

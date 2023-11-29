@@ -1,4 +1,4 @@
-#include"stack.hpp"
+#include "stack.hpp"
 
 
 Stack::Stack(){
@@ -11,9 +11,10 @@ StackElement Stack::top() const{
     
     else{
         cerr<<"***Error! Stack is empty***"<< endl;
-        return;
+        exit(1);
     }
 }
+
 Stack::~Stack() {
     Stack::NodePointer currPtr = myTop, nextPtr = NULL;
     while (currPtr != NULL) {
@@ -23,6 +24,7 @@ Stack::~Stack() {
     }
 
 }
+
 void Stack::display (ostream& out) const {
     if (empty()) {
         cerr << "Stack-empty!" << endl;
@@ -35,6 +37,7 @@ void Stack::display (ostream& out) const {
     }
     out << endl;
 }
+
 void Stack::pop(){
      if (!empty()) {
         Stack::NodePointer ptr = myTop;
@@ -51,14 +54,18 @@ bool Stack::empty() const{
 }
 
 void Stack::push(const StackElement& value){
+    Stack::NodePointer ptr = new Stack::Node(NULL);
+    ptr->direction = value;
     if (empty())
-    {
-      myTop =new Stack::Node(NULL); 
-      myTop->direction=value;
+    { 
+       myTop = ptr;
     }
     else{ 
-        myTop->next=new Stack::Node(NULL);
-        myTop = myTop->next;
-        myTop->direction=value;
+        ptr->next = myTop;
+        myTop = ptr;
     }
+}
+ostream& operator<< (ostream& out, const Stack& aStack) {
+    aStack.display(out);
+    return out;
 }
