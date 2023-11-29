@@ -31,10 +31,12 @@ int main(int argc, char const *argv[])
     s.pop();
     s.display(cout);
     cout<<h.isfound(&n)<<endl;
-    cell c(3,4,1);
+    cell c(3,4,1),c2(1,2);
     h.insert(&c);
-    cout<<h.isfound(&c)<<endl;
-        
+    //h.insert(&c2);
+    h.insert(&c);
+    cout<<h.isfound(&c)<<"   "<<h.isfound(&c2)<<endl;
+    
 
 
     return 0;
