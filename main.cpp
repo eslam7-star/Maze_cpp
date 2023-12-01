@@ -1,46 +1,48 @@
-//#include "cell.cpp"
+#include <SFML/Graphics.hpp>
 #include "hash_map.cpp"
 #include "stack.cpp"
-
-// cell** generate_cells( ){
-//     for (size_t i = 0; i < ; i++)
-//     {
-//         ;
-//     }
-    
-// }
-
-
+#include "Maze.cpp"
 
 
 int main(int argc, char const *argv[])
 {
-    int x;
-    cin>>x;
-    Hash_map h(x);
-    h.insert(&n);
-    h.insert(&r);
-    cout<<h;
+    int x,y;
+    cout<<"Enter maze lenght and width"<<endl;
+    cin>>x>>y;
+    Maze m(x,y);
+    Hash_map h_map((10*y)+x);
     Stack s;
-    s.push('r');
-    s.push('l');
-    s.push('r');
-    s.push('n');
-    s.push('s');
-    s.display(cout);
-    s.pop();
-    s.display(cout);
-    cout<<h.isfound(&n)<<endl;
-    cell c(3,4,1),c2(1,2);
-    h.insert(&c);
-    //h.insert(&c2);
-    h.insert(&c);
-    cout<<h.isfound(&c)<<"   "<<h.isfound(&c2)<<endl;
-    s.pop();
-    s.pop();
-    s.pop();
-    s.pop();
-    s.pop();
+
+    // SFML window setup
+    sf::RenderWindow window(sf::VideoMode(x * 30, y * 30), "Maze Display");
+    sf::CircleShape playerCircle;
+    
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            } else if (event.type == sf::Event::MouseButtonPressed) {
+                int cellX = event.mouseButton.x / 30;
+                int cellY = event.mouseButton.y / 30;
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+                    m.setStartPoint(cellX, cellY);
+                    playerCircle.setRadius(cellSize/2);
+                    playerCircle.setPosition( cellSize*cellX , cellSize*cellY );
+                    playerCircle.setFillColor(sf::Color::Blue);
+                } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+                    m.setEndPoint(cellX, cellY);
+                } else {
+                    m.toggleWall(cellX, cellY);
+                }
+            }
+        }
+        window.clear();
+        m.display(window);
+        window.draw(playerCircle);
+        window.display();
+    }
+
 
     return 0;
 }

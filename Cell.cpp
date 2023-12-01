@@ -15,17 +15,7 @@ class cell{
     int get_Y() const{
         return y;
     }
-
-    void add_cell(cell d){
-        x = x + d.x;
-        y = y + d.y;
-    }
-
-    void sub_cell(cell d){
-        x = x - d.x;
-        y = y - d.y;
-    }
-
+    
     bool issolid(){
         return iswall;
     }
@@ -37,6 +27,13 @@ class cell{
         return false;
     }
 
+    void display(){
+        (iswall)? std::cout<<"#":std::cout<<"=";
+    }
+
+    void toggle_wall(){
+        ( iswall )? iswall=0:iswall=1;
+    }
 
 }r(1,0),l(-1,0),n(0,1),s(0,-1);     // directions
 

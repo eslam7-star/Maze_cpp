@@ -1,0 +1,10 @@
+all: compile link
+
+compile:
+	g++ -c main.cpp -I"C:\Users\ESLAM ASHRAF\Downloads\SFML-2.6.1\include"
+
+link:
+	g++ main.o -o MAZE -L"C:\Users\ESLAM ASHRAF\Downloads\SFML-2.6.1\lib" -lsfml-graphics -lsfml-window -lsfml-system 
+
+clean:
+	rm -f main *.o
