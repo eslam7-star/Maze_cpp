@@ -55,7 +55,7 @@ bool Maze::isWall(int x, int y) {
 
 
 void Maze::toggleWall(int x, int y){
-    if( found_cell(x,y) == 0 || x == start_x || x == end_x ) return;
+    if( found_cell(x,y) == 0 || ( x == start_x &&  y == end_y )|| ( x == end_x && y == end_y )) return;
     found_cell(x,y)->toggle_wall(); 
 }
 

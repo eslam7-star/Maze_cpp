@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
         window.draw(playerCircle);
         window.display();
     }
-
+        
 
     return 0;
 }
