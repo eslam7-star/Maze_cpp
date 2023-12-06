@@ -10,8 +10,7 @@ int main(int argc, char const *argv[])
     cout<<"Enter maze lenght and width"<<endl;
     cin>>x>>y;
     Maze m(x,y);
-    Hash_map h_map((10*y)+x);
-    Stack s;
+    
 
     // SFML window setup
     sf::RenderWindow window(sf::VideoMode(x * 30, y * 30), "Maze Display");
@@ -42,7 +41,7 @@ int main(int argc, char const *argv[])
         window.draw(playerCircle);
         window.display();
     }
-        
+    
 
     return 0;
 }

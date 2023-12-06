@@ -87,3 +87,39 @@ void Maze::setEndPoint(int x, int y) {
     cell *c = found_cell(x,y); 
     if( c->issolid() ) c->toggle_wall();
 }
+
+void Maze::solve(sf::CircleShape& playerCircle){
+    Hash_map h_map((10*rows)+cols);
+    Stack s;
+    curr_x = start_x;
+    curr_y = start_y;
+    h_map.insert(maze[curr_x][curr_y]);
+    char arr[4]{0};
+    while( 1 )
+    {
+        get_direc(curr_x,curr_y,arr,*this);
+        
+
+        
+
+
+    }
+
+    
+}
+
+
+char get_direc(int x, int y , char arr[] ,const Maze& maze){
+    ( x+1 < maze.cols && !maze.maze[x+1][y]->issolid() )? arr[0] = 'r' : arr[0] = 0;
+    ( y+1 < maze.rows && !maze.maze[x][y+1]->issolid())? arr[1] = 'n' : arr[1] = 0;
+    ( x-1 <= 0 && !maze.maze[x-1][y]->issolid())? arr[2] = 'l' : arr[2] = 0;
+    ( y-1 <= 0 && !maze.maze[x][y-1]->issolid())? arr[3] = 's' : arr[3] = 0; 
+    int i = 0;
+    while( arr[i] != 'r' || arr[i] != 'l' || arr[i] != 's' || arr[i] != 'n'){ 
+        if( ++i > 3){
+            cerr<<"unsolvable maze ?!"<<endl;
+            exit(1);
+        }
+    }
+    return arr[i];
+}

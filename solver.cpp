@@ -14,8 +14,7 @@ bool has_right,has_left,has_north,has_south;
 
 public:
 
-solver( float radius , int x , int y){
-    
+solver(int x , int y) : x(x) , y(y){    
 }
 
 void move(int dx ,int dy){
@@ -28,9 +27,6 @@ void move_to(int x , int y){
     y=y;
 }
 
-void set_possible_ways(){
-     
-}
 
 
 
