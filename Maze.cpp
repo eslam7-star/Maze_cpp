@@ -113,12 +113,12 @@ void Maze::solve(sf::CircleShape& playerCircle){
     i=-1;
     cout<<"randdom :"<<ran<<endl;
     cout<<"arr_dir : "<<arr_dir[0]<<" "<<arr_dir[1]<<" "<<arr_dir[2]<<" "<<arr_dir[3]<<endl;
-    while( arr_dir[ran] == 0 && i < 3 ){ 
+    while( arr_dir[ran] == 'f' && i < 3 ){ 
         i++;
         ran = i;
         cout<<"in loop : "<<ran<<endl;
     }
-    if( arr_dir[ran] == 0 )
+    if( arr_dir[ran] == 'f' )
     {
         cerr<<"Maze unsolvable :) , make some changes "<<endl;
         return;
@@ -133,25 +133,24 @@ void Maze::solve(sf::CircleShape& playerCircle){
             for (size_t i = 0; i < 4 ; i++){
                 ran = i;
                 c = ( arr_dir[i] == 'r' )? &r : ( arr_dir[i] == 'l')? &l : (arr_dir[i] == 'n')? &s : (arr_dir[i] == 's')? &n : nullptr;
-                c->display();
-                if( !h_map.isfound(maze[curr_y+c->get_Y()][curr_x+c->get_x()]) ){
-                    h_map.insert(maze[curr_y+c->get_Y()][curr_x+c->get_x()]);
-                    move(arr_dir[i]);
-                    cout<<"inserted case 1"<<endl;
-                    stack.push(arr_dir[i]);
-                    break;
+                if ( c != 0 ){
+                    c->display();
+                    if( !h_map.isfound(maze[curr_y+c->get_Y()][curr_x+c->get_x()]) ){
+                        h_map.insert(maze[curr_y+c->get_Y()][curr_x+c->get_x()]);
+                        move(arr_dir[i]);
+                        cout<<"inserted case 1"<<endl;
+                        stack.push(arr_dir[i]);
+                        goto l;
+                    }
                 }
-
             }
             if(ran == 3){                  // all avaialbe directions stored in hash_table
                 pre = stack.top();
                 stack.pop();
                 cout<<"return case "<<endl;
-                bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('s') : ( pre == 'n')? move('n'): 0;
-                if( check_return == 0 ){
-                    cerr<<"Error : didn't return "<<endl;
-                    exit(1);
-                }
+                bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('n') : ( pre == 's')? move('n'): 0;
+                if( check_return == 0 )
+                    cerr<<"return error "<<endl;
             }
         }else{
             cout<<h_map.insert(maze[curr_y+c->get_Y()][curr_x+c->get_x()])<<endl;
@@ -160,6 +159,7 @@ void Maze::solve(sf::CircleShape& playerCircle){
             z = move(arr_dir[ran]);
         }
     }
+    l:
     cout<<"current x :"<<curr_x<<"curr_y"<<curr_y<<endl;
     cout<<z<<endl;
     h_map.display(cout);
@@ -191,6 +191,9 @@ bool Maze::move( char e ) {
     } else if ( e == 'n' && curr_y - 1 > 0 && !maze[curr_x][curr_y - 1]->issolid()) {
         curr_y--;
         moved =1;
+    }else{
+        cout<<"error can't move"<<endl;
+        return 0;
     }
 
     return moved;
@@ -198,8 +201,8 @@ bool Maze::move( char e ) {
 
 
 void Maze::set_direc(int x, int y ){
-    ( x+1 < cols && !maze[x+1][y]->issolid() )? arr_dir[1] = 'r' : arr_dir[1] = 0;
-    ( y+1 < rows && !maze[x][y+1]->issolid())? arr_dir[0] = 's' : arr_dir[0] = 0;
-    ( x-1 > 0 && !maze[x-1][y]->issolid())? arr_dir[2] = 'l' : arr_dir[2] = 0;
-    ( y-1 > 0 && !maze[x][y-1]->issolid())? arr_dir[3] = 'n' : arr_dir[3] = 0; 
+    ( x+1 < cols && !maze[x+1][y]->issolid() )? arr_dir[1] = 'r' : arr_dir[1] = 'f';
+    ( y+2 < rows && !maze[x][y+1]->issolid())? arr_dir[0] = 's' : arr_dir[0] = 'f';
+    ( x-1 > 0 && !maze[x-1][y]->issolid())? arr_dir[2] = 'l' : arr_dir[2] = 'f';
+    ( y-2 > 0 && !maze[x][y-1]->issolid())? arr_dir[3] = 'n' : arr_dir[3] = 'f'; 
 }
