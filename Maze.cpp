@@ -88,6 +88,7 @@ void Maze::setStartPoint(int x, int y) {
     }
     cell *c = found_cell(x,y); 
     if( c->issolid() ) c->toggle_wall();
+    h_map.insert(maze[start_y][start_x]);
 }
 
 void Maze::setEndPoint(int x, int y) {
@@ -111,6 +112,7 @@ void Maze::solve(sf::CircleShape& playerCircle){
     ran = rand() % 4;
     i=-1;
     cout<<"randdom :"<<ran<<endl;
+    cout<<"arr_dir : "<<arr_dir[0]<<" "<<arr_dir[1]<<" "<<arr_dir[2]<<" "<<arr_dir[3]<<endl;
     while( arr_dir[ran] == 0 && i < 3 ){ 
         i++;
         ran = i;
@@ -164,7 +166,10 @@ void Maze::solve(sf::CircleShape& playerCircle){
     stack.display(cout);
     cout<<"=============="<<endl;
 
-    if( curr_x == end_x && curr_y == end_y ) return;
+    if( curr_x == end_x && curr_y == end_y ){
+        cout<<"maze solved, reached the end point "<<endl;
+        exit(1);
+    }    
     //sf::sleep(sf::seconds(1));
     
 }
