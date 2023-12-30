@@ -19,7 +19,7 @@ int rows,cols;
 int size;
 int curr_x,curr_y;
 char arr_dir[4]{0};               // current available directions
-Stack s;
+Stack stack;
 
 
 

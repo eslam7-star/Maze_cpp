@@ -96,15 +96,18 @@ void Maze::setEndPoint(int x, int y) {
 
 
 void Maze::solve(sf::CircleShape& playerCircle){
-    int ran;
+    int ran,i=0;
     Hash_map h_map(10*rows + cols);
+    cell* c;
+    char pre;
 
     while ( curr_x != end_x && curr_y != end_y )
     {
         set_direc(curr_x,curr_y);
         ran = rand()% 4;
-        int i = 0;
-        while( arr_dir[ran] == 0 && i < 4){ 
+        i=0;
+
+        while( arr_dir[ran] == 0 && i < 3 ){ 
             i++;
         }
         if( arr_dir[ran] == 0 )
@@ -112,9 +115,30 @@ void Maze::solve(sf::CircleShape& playerCircle){
             cerr<<"Maze unsolvable :) , make some changes "<<endl;
             return;
         }else{
-            if( move( arr_dir[ran]) && h_map.isfound(maze[curr_x][curr_y])){
-                s.push(arr_dir[ran]);
-                h_map.insert(maze[curr_x][curr_y]);
+            c = ( arr_dir[ran] == 'r' )? &r : ( arr_dir[ran] == 'l')? &l : (arr_dir[ran] == 'n')? &n : (arr_dir[ran] == 's')? &s : nullptr;
+            if( h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
+                for (size_t i = 0; i < 4 ; i++){
+                    c = ( arr_dir[i] == 'r' )? &r : ( arr_dir[i] == 'l')? &l : (arr_dir[i] == 'n')? &n : (arr_dir[i] == 's')? &s : nullptr;
+                    if( !h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
+                        move(arr_dir[i]);
+                        h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()]);
+                        stack.push(arr_dir[i]);
+                        break;
+                    }
+                }
+                if(ran == 4){                  // all avaialbe directions stored in hash_table
+                    pre = stack.top();
+                    stack.pop();
+                    bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('n') : ( pre == 'n')? move('s'): 0;
+                    if( check_return == 0 ){
+                        cerr<<"Error : didn't return "<<endl;
+                        exit(1);
+                    }
+                }
+            }else{
+                h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()]);
+                stack.push(arr_dir[ran]);
+                move(arr_dir[ran]);
             }
         }
     }
