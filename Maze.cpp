@@ -39,6 +39,10 @@ void Maze::display(sf::RenderWindow& window , sf::CircleShape& playerCircle ) {
             } else {
                 cellShape.setFillColor(maze[i][j]->issolid() ? sf::Color::Black : sf::Color::White);
             }
+            if (h_map.isfound(maze[i][j])) {
+                // Visited cell color (e.g., yellow)
+                cellShape.setFillColor(sf::Color::Yellow);
+            }
             window.draw(cellShape);
         }
     }
@@ -117,20 +121,20 @@ void Maze::solve(sf::CircleShape& playerCircle){
         cerr<<"Maze unsolvable :) , make some changes "<<endl;
         return;
     }else{
-        c = ( arr_dir[ran] == 'r' )? &r : ( arr_dir[ran] == 'l')? &l : (arr_dir[ran] == 'n')? &n : (arr_dir[ran] == 's')? &s : nullptr;
+        c = ( arr_dir[ran] == 'r' )? &r : ( arr_dir[ran] == 'l')? &l : (arr_dir[ran] == 'n')? &s : (arr_dir[ran] == 's')? &n : nullptr;
         if( c == 0)
             cerr<<"null c"<<endl;
         c->display();
-        maze[curr_x+c->get_x()][curr_y+c->get_Y()]->display();
-        cout<<"found ?? :"<<h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()])<<endl;
-        if( h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
+        maze[curr_y+c->get_Y()][curr_x+c->get_x()]->display();
+        cout<<"found ?? :"<<h_map.isfound(maze[curr_y+c->get_Y()][curr_x+c->get_x()])<<endl;
+        if( h_map.isfound(maze[curr_y+c->get_Y()][curr_x+c->get_x()]) ){
             for (size_t i = 0; i < 4 ; i++){
                 ran = i;
-                c = ( arr_dir[i] == 'r' )? &r : ( arr_dir[i] == 'l')? &l : (arr_dir[i] == 'n')? &n : (arr_dir[i] == 's')? &s : nullptr;
+                c = ( arr_dir[i] == 'r' )? &r : ( arr_dir[i] == 'l')? &l : (arr_dir[i] == 'n')? &s : (arr_dir[i] == 's')? &n : nullptr;
                 c->display();
-                if( !h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
+                if( !h_map.isfound(maze[curr_y+c->get_Y()][curr_x+c->get_x()]) ){
+                    h_map.insert(maze[curr_y+c->get_Y()][curr_x+c->get_x()]);
                     move(arr_dir[i]);
-                    h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()]);
                     cout<<"inserted case 1"<<endl;
                     stack.push(arr_dir[i]);
                     break;
@@ -141,22 +145,23 @@ void Maze::solve(sf::CircleShape& playerCircle){
                 pre = stack.top();
                 stack.pop();
                 cout<<"return case "<<endl;
-                bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('n') : ( pre == 'n')? move('s'): 0;
+                bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('s') : ( pre == 'n')? move('n'): 0;
                 if( check_return == 0 ){
                     cerr<<"Error : didn't return "<<endl;
                     exit(1);
                 }
             }
         }else{
-            cout<<h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()])<<endl;
+            cout<<h_map.insert(maze[curr_y+c->get_Y()][curr_x+c->get_x()])<<endl;
             cout<<"inserted case 2"<<endl;
             stack.push(arr_dir[ran]);
             z = move(arr_dir[ran]);
         }
     }
-    //cout<<"current x :"<<curr_x<<"curr_y"<<curr_y<<endl;
+    cout<<"current x :"<<curr_x<<"curr_y"<<curr_y<<endl;
     cout<<z<<endl;
     h_map.display(cout);
+    stack.display(cout);
     cout<<"=============="<<endl;
 
     if( curr_x == end_x && curr_y == end_y ) return;

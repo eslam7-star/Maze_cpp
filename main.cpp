@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
 
     throw std::runtime_error("An error occurred!");
     } catch (const std::exception& e) {
-        std::cerr << "Caught exception: " << e.what() << std::endl;
+        std::cout << "Caught exception: " << e.what() << std::endl;
         //printStackTrace();
     }        
 
