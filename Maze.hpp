@@ -18,16 +18,16 @@ cell*** maze;                     // 2d array of cell pointers :)
 int rows,cols;
 int size;
 int curr_x,curr_y;
-bool has_many_dire;
-int possible_ways;
-bool has_right,has_left,has_north,has_south;
+char arr_dir[4]{0};               // current available directions
+Stack s;
+
 
 
 int start_x,start_y,end_x,end_y;
 
 //Maze( cell* startp, cell *endp, int rows = 15, int cols = 15, cell* obstacles );
 Maze(int rows, int cols );
-void display(sf::RenderWindow& window);
+void display(sf::RenderWindow& window , sf::CircleShape& playerCircle);
 void toggleWall(int x, int y);
 cell* found_cell(int x,int Y);
 bool isWall(int x, int y);
@@ -35,8 +35,11 @@ bool isWall(int x, int y);
 void setStartPoint(int x, int y);
 void setEndPoint(int x, int y);
 void solve(sf::CircleShape& playerCircle);
-
+void set_direc(int x, int y);
+bool move(char dir);
 
 };
+
+
 
 #endif 

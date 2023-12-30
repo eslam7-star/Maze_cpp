@@ -10,7 +10,6 @@ int main(int argc, char const *argv[])
     cout<<"Enter maze lenght and width"<<endl;
     cin>>x>>y;
     Maze m(x,y);
-    
 
     // SFML window setup
     sf::RenderWindow window(sf::VideoMode(x * 30, y * 30), "Maze Display");
@@ -34,10 +33,13 @@ int main(int argc, char const *argv[])
                 } else {
                     m.toggleWall(cellX, cellY);
                 }
+            }else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space ) {
+               // ( event.key.code == sf::Keyboard::W )? keyPressed = 'W':( event.key.code == sf::Keyboard::A )? 'A':( event.key.code == sf::Keyboard::S )? 'S': ( event.key.code == sf::Keyboard::D )? 'D': 0;  
+                m.solve(playerCircle);
             }
         }
         window.clear();
-        m.display(window);
+        m.display(window,playerCircle);
         window.draw(playerCircle);
         window.display();
     }
