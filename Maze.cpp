@@ -144,13 +144,21 @@ void Maze::solve(sf::CircleShape& playerCircle){
                     }
                 }
             }
-            if(ran == 3){                  // all avaialbe directions stored in hash_table
+            if(ran == 3){
+                p:                  // all avaialbe directions stored in hash_table
                 pre = stack.top();
-                stack.pop();
+                if ( !stack.empty() ){     
+                    stack.pop();
+                }else{
+                    cerr<<"unsolvable maze"<<endl;
+                    exit(1);
+                }    
                 cout<<"return case "<<endl;
-                bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('n') : ( pre == 's')? move('n'): 0;
-                if( check_return == 0 )
+                bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('n') : ( pre == 'n')? move('s'): 0;
+                if( check_return == 0 ){
                     cerr<<"return error "<<endl;
+                    goto p;
+                }
             }
         }else{
             cout<<h_map.insert(maze[curr_y+c->get_Y()][curr_x+c->get_x()])<<endl;
@@ -179,16 +187,16 @@ bool Maze::move( char e ) {
     cout<<e<<endl;
     //cout<<curr_x<<endl;
     bool moved = 0;
-    if (e == 'r' && curr_x + 1 < cols && !maze[curr_x + 1][curr_y]->issolid()) {
+    if (e == 'r' && curr_x + 1 < cols && !maze[curr_y][curr_x+1]->issolid()) {
         curr_x++;
         moved =1;
-    } else if ( e == 'l' && curr_x - 1 > 0 && !maze[curr_x - 1][curr_y]->issolid()) {
+    } else if ( e == 'l' && curr_x - 1 > 0 && !maze[curr_y][curr_x-1]->issolid()) {
         curr_x--;
         moved =1;
-    } else if ( e == 's' && curr_y + 1 < rows && !maze[curr_x][curr_y + 1]->issolid()) {
+    } else if ( e == 's' && curr_y + 1 < rows && !maze[curr_y+1][curr_x]->issolid()) {
         curr_y++;
         moved =1;
-    } else if ( e == 'n' && curr_y - 1 > 0 && !maze[curr_x][curr_y - 1]->issolid()) {
+    } else if ( e == 'n' && curr_y - 1 > 0 && !maze[curr_y-1][curr_x]->issolid()) {
         curr_y--;
         moved =1;
     }else{
@@ -201,8 +209,8 @@ bool Maze::move( char e ) {
 
 
 void Maze::set_direc(int x, int y ){
-    ( x+1 < cols && !maze[x+1][y]->issolid() )? arr_dir[1] = 'r' : arr_dir[1] = 'f';
-    ( y+2 < rows && !maze[x][y+1]->issolid())? arr_dir[0] = 's' : arr_dir[0] = 'f';
-    ( x-1 > 0 && !maze[x-1][y]->issolid())? arr_dir[2] = 'l' : arr_dir[2] = 'f';
-    ( y-2 > 0 && !maze[x][y-1]->issolid())? arr_dir[3] = 'n' : arr_dir[3] = 'f'; 
+    ( x+1 < cols && !maze[y][x+1]->issolid() )? arr_dir[1] = 'r' : arr_dir[1] = 'f';
+    ( y+1 < rows && !maze[y+1][x]->issolid())? arr_dir[0] = 's' : arr_dir[0] = 'f';
+    ( x-1 > 0 && !maze[y][x-1]->issolid())? arr_dir[2] = 'l' : arr_dir[2] = 'f';
+    ( y-1 > 0 && !maze[y-1][x]->issolid())? arr_dir[3] = 'n' : arr_dir[3] = 'f'; 
 }
