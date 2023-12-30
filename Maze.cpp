@@ -1,9 +1,10 @@
 #include "Maze.hpp"
-#include <random>
+#include <ctime>
+#include <cstdlib>
 
 
 
-Maze::Maze(int rows , int cols ): rows(rows), cols(cols){
+Maze::Maze(int rows , int cols ): rows(rows), cols(cols) , h_map(10 * rows + cols) {
     size = cols*rows;
     maze = new (nothrow) cell**[rows];
     if ( maze == 0 ) {
@@ -97,56 +98,75 @@ void Maze::setEndPoint(int x, int y) {
 
 void Maze::solve(sf::CircleShape& playerCircle){
     int ran,i=0;
-    Hash_map h_map(10*rows + cols);
     cell* c;
     char pre;
+    bool z=0;
 
-    while ( curr_x != end_x && curr_y != end_y )
+    set_direc(curr_x,curr_y);
+    srand(static_cast<unsigned>(std::time(nullptr)));
+    ran = rand() % 4;
+    i=-1;
+    cout<<"randdom :"<<ran<<endl;
+    while( arr_dir[ran] == 0 && i < 3 ){ 
+        i++;
+        ran = i;
+        cout<<"in loop : "<<ran<<endl;
+    }
+    if( arr_dir[ran] == 0 )
     {
-        set_direc(curr_x,curr_y);
-        ran = rand()% 4;
-        i=0;
+        cerr<<"Maze unsolvable :) , make some changes "<<endl;
+        return;
+    }else{
+        c = ( arr_dir[ran] == 'r' )? &r : ( arr_dir[ran] == 'l')? &l : (arr_dir[ran] == 'n')? &n : (arr_dir[ran] == 's')? &s : nullptr;
+        if( c == 0)
+            cerr<<"null c"<<endl;
+        c->display();
+        maze[curr_x+c->get_x()][curr_y+c->get_Y()]->display();
+        cout<<"found ?? :"<<h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()])<<endl;
+        if( h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
+            for (size_t i = 0; i < 4 ; i++){
+                ran = i;
+                c = ( arr_dir[i] == 'r' )? &r : ( arr_dir[i] == 'l')? &l : (arr_dir[i] == 'n')? &n : (arr_dir[i] == 's')? &s : nullptr;
+                c->display();
+                if( !h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
+                    move(arr_dir[i]);
+                    h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()]);
+                    cout<<"inserted case 1"<<endl;
+                    stack.push(arr_dir[i]);
+                    break;
+                }
 
-        while( arr_dir[ran] == 0 && i < 3 ){ 
-            i++;
-        }
-        if( arr_dir[ran] == 0 )
-        {
-            cerr<<"Maze unsolvable :) , make some changes "<<endl;
-            return;
-        }else{
-            c = ( arr_dir[ran] == 'r' )? &r : ( arr_dir[ran] == 'l')? &l : (arr_dir[ran] == 'n')? &n : (arr_dir[ran] == 's')? &s : nullptr;
-            if( h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
-                for (size_t i = 0; i < 4 ; i++){
-                    c = ( arr_dir[i] == 'r' )? &r : ( arr_dir[i] == 'l')? &l : (arr_dir[i] == 'n')? &n : (arr_dir[i] == 's')? &s : nullptr;
-                    if( !h_map.isfound(maze[curr_x+c->get_x()][curr_y+c->get_Y()]) ){
-                        move(arr_dir[i]);
-                        h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()]);
-                        stack.push(arr_dir[i]);
-                        break;
-                    }
-                }
-                if(ran == 4){                  // all avaialbe directions stored in hash_table
-                    pre = stack.top();
-                    stack.pop();
-                    bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('n') : ( pre == 'n')? move('s'): 0;
-                    if( check_return == 0 ){
-                        cerr<<"Error : didn't return "<<endl;
-                        exit(1);
-                    }
-                }
-            }else{
-                h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()]);
-                stack.push(arr_dir[ran]);
-                move(arr_dir[ran]);
             }
+            if(ran == 3){                  // all avaialbe directions stored in hash_table
+                pre = stack.top();
+                stack.pop();
+                cout<<"return case "<<endl;
+                bool check_return = ( pre == 'r' )? move('l'): ( pre == 'l')? move('r') : (pre == 's')? move('n') : ( pre == 'n')? move('s'): 0;
+                if( check_return == 0 ){
+                    cerr<<"Error : didn't return "<<endl;
+                    exit(1);
+                }
+            }
+        }else{
+            cout<<h_map.insert(maze[curr_x+c->get_x()][curr_y+c->get_Y()])<<endl;
+            cout<<"inserted case 2"<<endl;
+            stack.push(arr_dir[ran]);
+            z = move(arr_dir[ran]);
         }
     }
+    //cout<<"current x :"<<curr_x<<"curr_y"<<curr_y<<endl;
+    cout<<z<<endl;
+    h_map.display(cout);
+    cout<<"=============="<<endl;
+
+    if( curr_x == end_x && curr_y == end_y ) return;
+    //sf::sleep(sf::seconds(1));
+    
 }
     
 
 bool Maze::move( char e ) {
-    //cout<<e<<endl;
+    cout<<e<<endl;
     //cout<<curr_x<<endl;
     bool moved = 0;
     if (e == 'r' && curr_x + 1 < cols && !maze[curr_x + 1][curr_y]->issolid()) {
@@ -168,8 +188,8 @@ bool Maze::move( char e ) {
 
 
 void Maze::set_direc(int x, int y ){
-    ( x+1 < cols && !maze[x+1][y]->issolid() )? arr_dir[0] = 'r' : arr_dir[0] = 0;
-    ( y+1 < rows && !maze[x][y+1]->issolid())? arr_dir[1] = 's' : arr_dir[1] = 0;
+    ( x+1 < cols && !maze[x+1][y]->issolid() )? arr_dir[1] = 'r' : arr_dir[1] = 0;
+    ( y+1 < rows && !maze[x][y+1]->issolid())? arr_dir[0] = 's' : arr_dir[0] = 0;
     ( x-1 > 0 && !maze[x-1][y]->issolid())? arr_dir[2] = 'l' : arr_dir[2] = 0;
     ( y-1 > 0 && !maze[x][y-1]->issolid())? arr_dir[3] = 'n' : arr_dir[3] = 0; 
 }

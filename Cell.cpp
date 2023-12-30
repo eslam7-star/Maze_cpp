@@ -21,7 +21,7 @@ class cell{
     }
     
     bool operator==(cell c){
-        if(x==c.get_x()&&y==c.get_Y()&&iswall==c.issolid()) {
+        if(x==c.get_x()&&y==c.get_Y()) {
           return true;
         }
         return false;
@@ -29,6 +29,8 @@ class cell{
 
     void display(){
         (iswall)? std::cout<<"#":std::cout<<"=";
+        std::cout<<std::endl;
+        std::cout<<"x:"<<get_x()<<"y:"<<get_Y()<<std::endl;
     }
 
     void toggle_wall(){

@@ -21,6 +21,8 @@ bool insert( cell* c );
 bool isfound( cell* c);
 ~Hash_map();
 void display(ostream& out)const;
+//Hash_map::Hash_map();
+//Hash_map& Hash_map::operator=(const Hash_map& other);
 
 
 };

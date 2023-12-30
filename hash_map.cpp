@@ -18,6 +18,41 @@ Hash_map::Hash_map(int n)
     }
 }
 
+
+/* 
+Hash_map::Hash_map()
+    : size(0), hash_array_ptr(nullptr) {
+}
+
+
+Hash_map& Hash_map::operator=(const Hash_map& other) {
+    if (this != &other) { // Check for self-assignment
+        // Deallocate existing memory
+        delete[] hash_array_ptr;
+
+        // Copy size
+        size = other.size;
+
+        // Allocate new memory
+        hash_array_ptr = new (nothrow) cell*[size];
+        if (hash_array_ptr == nullptr) {
+            cerr << "***Error! Inadequate memory to allocate hash***";
+            exit(1);
+        }
+
+        // Copy contents
+        for (size_t i = 0; i < size; ++i) {
+            if (other.hash_array_ptr[i] != nullptr) {
+                hash_array_ptr[i] = new cell(*(other.hash_array_ptr[i]));
+            } else {
+                hash_array_ptr[i] = nullptr;
+            }
+        }
+    }
+    return *this;
+} */
+
+
 Hash_map::~Hash_map(){
     for (int i=0;i<size;i++){
         delete hash_array_ptr[i];
@@ -30,7 +65,7 @@ int Hash_map::hash_function( cell* c ){
         cerr<<"null cell pointer "<<endl;
         exit(1);
     }
-    int index = (10*(c->get_Y()) + c->get_x()) % size;
+    int index = (10*(c->get_Y()) + c->get_x());
     if ( index < 0 || index > size){
         cerr<<"index not valid"<<endl;
         exit(1);
@@ -43,13 +78,14 @@ bool Hash_map::insert( cell* c ){
         hash_array_ptr[ hash_function(c) ] = c;
     }else{
         cerr<<"a collision detected"<<endl;   // to avoid add the same cell twice
+        cout<<"x:"<<c->get_x()<<" : y"<<c->get_Y()<<endl;
         return 0;
     }
     return 1;
 }
 
 bool Hash_map::isfound(cell* c){
-    if ( c != 0 && hash_array_ptr[hash_function(c)] == c )
+    if ( c != nullptr && hash_array_ptr[hash_function(c)] == c )
     {
         return 1;
     }

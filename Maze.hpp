@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Cell.cpp"
 #include "solver.cpp"
+#include "hash_map.hpp"
+#include "stack"
 
 using namespace std;
 
@@ -20,7 +22,7 @@ int size;
 int curr_x,curr_y;
 char arr_dir[4]{0};               // current available directions
 Stack stack;
-
+Hash_map h_map;
 
 
 int start_x,start_y,end_x,end_y;
