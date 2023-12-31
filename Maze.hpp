@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "Cell.cpp"
-#include "solver.cpp"
 #include "hash_map.hpp"
 #include "stack"
 
@@ -16,7 +15,7 @@ class Maze {
 
 public:
 
-cell*** maze;                     // 2d array of cell pointers :)
+cell*** maze;                     // 2d array of cell pointers
 int rows,cols;
 int size;
 int curr_x,curr_y;
