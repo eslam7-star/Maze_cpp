@@ -3,7 +3,8 @@
 class cell{
     int x,y;
     bool iswall = 0;    
-    
+    bool in_path=0;
+
     public:
     cell() :x(0) , y(0) { };
     cell(int x,int y,bool b=0): x(x) , y(y) , iswall(b){};
@@ -18,6 +19,18 @@ class cell{
     
     bool issolid(){
         return iswall;
+    }
+
+    void set_in_path(){
+        in_path=1;
+    }
+
+    void unset_inpath(){
+        in_path =0;
+    }
+
+    bool get_in_path(){
+        return in_path;
     }
     
     bool operator==(cell c){

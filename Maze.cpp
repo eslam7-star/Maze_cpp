@@ -39,10 +39,11 @@ void Maze::display(sf::RenderWindow& window , sf::CircleShape& playerCircle ) {
             } else {
                 cellShape.setFillColor(maze[i][j]->issolid() ? sf::Color::Black : sf::Color::White);
             }
-            if (h_map.isfound(maze[i][j])) {
-                // Visited cell color (e.g., yellow)
-                cellShape.setFillColor(sf::Color::Yellow);
-            }
+            if ( display_path ){
+                if( maze[i][j]->get_in_path() )
+                    cellShape.setFillColor(sf::Color::Yellow);
+            } 
+            
             window.draw(cellShape);
         }
     }
@@ -140,6 +141,7 @@ void Maze::solve(sf::CircleShape& playerCircle){
                         move(arr_dir[i]);
                         cout<<"inserted case 1"<<endl;
                         stack.push(arr_dir[i]);
+                        //maze[curr_y+c->get_Y()][curr_x+c->get_x()]->set_in_path();
                         goto l;
                     }
                 }
@@ -149,6 +151,9 @@ void Maze::solve(sf::CircleShape& playerCircle){
                 pre = stack.top();
                 if ( !stack.empty() ){     
                     stack.pop();
+                    // int b = (pre == 'r')? 1: (pre == 'l')? -1 : 0; //x
+                    // int p = (pre == 's')? 1: (pre == 'n')? -1 : 0; //y
+                    // maze[curr_y+p][curr_x+b]->unset_inpath();
                 }else{
                     cerr<<"unsolvable maze"<<endl;
                     exit(1);
@@ -164,6 +169,7 @@ void Maze::solve(sf::CircleShape& playerCircle){
             cout<<h_map.insert(maze[curr_y+c->get_Y()][curr_x+c->get_x()])<<endl;
             cout<<"inserted case 2"<<endl;
             stack.push(arr_dir[ran]);
+            //maze[curr_y+c->get_Y()][curr_x+c->get_x()]->set_in_path();
             z = move(arr_dir[ran]);
         }
     }
@@ -176,7 +182,36 @@ void Maze::solve(sf::CircleShape& playerCircle){
 
     if( curr_x == end_x && curr_y == end_y ){
         cout<<"maze solved, reached the end point "<<endl;
-        exit(1);
+        Stack s;
+        int x=start_x,y=start_y;
+        int tmp;
+        char c;
+        cout<<"start at : "<<start_x<<"start_y :"<<start_y<<endl;
+        while ( !stack.empty() )
+        {
+            s.push(stack.top());
+            stack.pop();
+        }
+        
+        while ( !s.empty() )
+        {
+            c = s.top();
+            tmp = (c == 'r')? 1: (c == 'l')? -1 : 0;      //x
+            x+=tmp;
+            tmp = (c == 's')? 1: (c == 'n')? -1 : 0;      //y
+            y+=tmp;
+            cout<<"x : "<<x<<" : "<<"y: "<<y<<endl;
+            if( maze[y][x] != NULL ){
+                maze[y][x]->set_in_path();
+            }else{  
+                cerr<<"null pointer exception"<<endl;
+                cerr<<"x : "<<x<<" : "<<"y: "<<y<<endl;
+            }
+            s.pop();
+        }
+
+        display_path = 1;
+        //exit(1);
     }    
     //sf::sleep(sf::seconds(1));
     
@@ -214,3 +249,5 @@ void Maze::set_direc(int x, int y ){
     ( x-1 > 0 && !maze[y][x-1]->issolid())? arr_dir[2] = 'l' : arr_dir[2] = 'f';
     ( y-1 > 0 && !maze[y-1][x]->issolid())? arr_dir[3] = 'n' : arr_dir[3] = 'f'; 
 }
+
+
